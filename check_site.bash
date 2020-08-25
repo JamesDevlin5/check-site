@@ -58,7 +58,8 @@ success "Hello World!"
 failure "Hello World!"
 
 # Check Site Test
-for site in $DEFAULT_SITES; do
+
+for site in ${@:-$DEFAULT_SITES}; do
     if check_site "$site"
     then
         success "$site"
