@@ -53,13 +53,25 @@ check_site() {
     return 0
 }
 
-# Check Site Test
-for site in ${@:-$DEFAULT_SITES}; do
+# Tests the provided site by first running a series of ping tests.
+# Should these respond successfully, then a success message is printed,
+# along with the name of the server or site tested.
+# Otherwise, a failure message is printed, along with the name of the server
+# or site tested.
+# Argument: The site or server address to ping
+test_site() {
+    local site="$1"
+
     if check_site "$site"
     then
         success "$site"
     else
         failure "$site"
     fi
+}
+
+# Check Site Test
+for site in ${*:-$DEFAULT_SITES}; do
+    test_site "$site"
 done
 
