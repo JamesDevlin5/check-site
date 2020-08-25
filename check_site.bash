@@ -9,6 +9,11 @@ RESET_CODE="\e[0m"
 
 # The number of attempts to reach a server before aborting
 NUM_ATTEMPTS=3
+# The number of seconds before timing out on a ping request
+TIMEOUT=3
+
+# The default sites to check to connectivity
+DEFAULT_SITES="google.com amazon.com fail.com twitter.com reddit.com netflix.com f0xN3wZ.c0m"
 
 # Prints a message indicating success, along with accompanying text
 # Argument: The message following the indication of success
@@ -36,7 +41,7 @@ reset() {
 # The return value incidates whether the server was successfully reached
 check_site() {
     local count=$NUM_ATTEMPTS
-    until ping -c 1 "$1" > /dev/null 2>&1; do
+    until ping -w "$TIMEOUT" -c 1 "$1" > /dev/null 2>&1; do
         if [[ $count -eq 0 ]]; then
             return 1
         else
@@ -53,12 +58,14 @@ success "Hello World!"
 failure "Hello World!"
 
 # Check Site Test
-if check_site google.com
-then
-    success "Ping worked!"
-else
-    failure "Ping failed!"
-fi
+for site in $DEFAULT_SITES; do
+    if check_site "$site"
+    then
+        success "$site"
+    else
+        failure "$site"
+    fi
+done
 
 # Reset
 reset
