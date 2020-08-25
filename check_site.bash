@@ -51,14 +51,7 @@ check_site() {
     return 0
 }
 
-# Success Test
-success "Hello World!"
-
-# Failure Test
-failure "Hello World!"
-
 # Check Site Test
-
 for site in ${@:-$DEFAULT_SITES}; do
     if check_site "$site"
     then
