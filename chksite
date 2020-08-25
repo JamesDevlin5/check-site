@@ -71,7 +71,20 @@ test_site() {
 }
 
 # Check Site Test
+i=0
+# Iterate either provided argument values, or default site values
 for site in ${*:-$DEFAULT_SITES}; do
-    test_site "$site"
+    # Test the site and report findings, in the background
+    test_site "$site" &
+    # Add pid to list
+    pids[${i}]="$!"
+    # Increment counter
+    i=$i+1
+done
+
+# Iterate pid list of processes we're waiting for
+for pid in ${pids[*]}; do
+    # Wait for each process
+    wait $pid
 done
 
