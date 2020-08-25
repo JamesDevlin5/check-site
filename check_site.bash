@@ -20,6 +20,7 @@ DEFAULT_SITES="google.com amazon.com fail.com twitter.com reddit.com netflix.com
 # The argument will be colored along with the message
 success() {
     echo -e "$SUCCESS_CODE""Success: $1"
+    reset
 }
 
 # Prints a message indicating failure, along with accompanying text
@@ -27,6 +28,7 @@ success() {
 # The argument will be colored along with the message
 failure() {
     echo -e "$FAILURE_CODE""Failure: $1"
+    reset
 }
 
 # Resets the terminal printing scheme to default
@@ -61,5 +63,3 @@ for site in ${@:-$DEFAULT_SITES}; do
     fi
 done
 
-# Reset
-reset
