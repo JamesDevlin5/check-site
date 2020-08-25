@@ -35,8 +35,15 @@ reset() {
 # Argument: The server address to ping
 # The return value incidates whether the server was successfully reached
 check_site() {
-    ping -c $NUM_ATTEMPTS "$1" > /dev/null
-    return $?
+    local count=$NUM_ATTEMPTS
+    until ping -c 1 "$1" > /dev/null 2>&1; do
+        if [[ $count -eq 0 ]]; then
+            return 1
+        else
+            count=$count-1
+        fi
+    done
+    return 0
 }
 
 # Success Test
@@ -46,7 +53,7 @@ success "Hello World!"
 failure "Hello World!"
 
 # Check Site Test
-if check_site 8.8.8.8
+if check_site google.com
 then
     success "Ping worked!"
 else
