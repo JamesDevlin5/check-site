@@ -17,3 +17,5 @@ Otherwise, the interaction will timeout and be considered a failure.
 ![Default Example](./default_example.png)
 
 ![Example2](./example2.png)
+
+![Example3](./example3.png)
