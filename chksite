@@ -19,22 +19,14 @@ DEFAULT_SITES="google.com amazon.com fail.com twitter.com reddit.com netflix.com
 # Argument: The message following the indication of success
 # The argument will be colored along with the message
 success() {
-    echo -e "$SUCCESS_CODE""Success: $1"
-    reset
+    echo -e "$SUCCESS_CODE""Success: $1""$RESET_CODE"
 }
 
 # Prints a message indicating failure, along with accompanying text
 # Argument: The message following the indication of failure
 # The argument will be colored along with the message
 failure() {
-    echo -e "$FAILURE_CODE""Failure: $1"
-    reset
-}
-
-# Resets the terminal printing scheme to default
-# This should be used after printing to the terminal is done, since we are altering text colors
-reset() {
-    echo -n -e "$RESET_CODE"
+    echo -e "$FAILURE_CODE""Failure: $1""$RESET_CODE"
 }
 
 # Checks the provided server address by sending a ping ICMP message
